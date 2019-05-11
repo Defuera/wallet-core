@@ -6,35 +6,36 @@
 
 #include "Coin.h"
 
+#include "ARK/Address.h"
+#include "Aeternity/Address.h"
 #include "Aion/Address.h"
 #include "Bitcoin/Address.h"
-#include "Bitcoin/SegwitAddress.h"
 #include "Bitcoin/CashAddress.h"
+#include "Bitcoin/SegwitAddress.h"
+#include "Bravo/Address.h"
+#include "Cosmos/Address.h"
 #include "Decred/Address.h"
+#include "EOS/Address.h"
 #include "Ethereum/Address.h"
 #include "Groestlcoin/Address.h"
 #include "IOST/Account.h"
 #include "Icon/Address.h"
+#include "IoTeX/Address.h"
 #include "Iocoin/Address.h"
-#include "Nano/Address.h"
 #include "NEO/Address.h"
+#include "NULS/Address.h"
+#include "Nano/Address.h"
 #include "Nimiq/Address.h"
 #include "Ontology/Address.h"
 #include "Ripple/Address.h"
+#include "Semux/Address.h"
+#include "Steem/Address.h"
 #include "Stellar/Address.h"
-#include "Cosmos/Address.h"
 #include "Tezos/Address.h"
 #include "Tron/Address.h"
 #include "Wanchain/Address.h"
 #include "Zcash/TAddress.h"
-#include "NULS/Address.h"
-#include "Bravo/Address.h"
-#include "Steem/Address.h"
-#include "EOS/Address.h"
-#include "IoTeX/Address.h"
 #include "Zilliqa/Address.h"
-#include "Semux/Address.h"
-#include "ARK/Address.h"
 
 #include <TrustWalletCore/TWHRP.h>
 #include <TrustWalletCore/TWP2PKHPrefix.h>
@@ -45,8 +46,11 @@
 
 using namespace TW;
 
-bool TW::validateAddress(TWCoinType coin, const std::string& string) {
+bool TW::validateAddress(TWCoinType coin, const std::string &string) {
     switch (coin) {
+    case TWCoinTypeAeternity:
+        return Aeternity::Address::isValid(string);
+
     case TWCoinTypeAion:
         return Aion::Address::isValid(string);
 
@@ -82,7 +86,8 @@ bool TW::validateAddress(TWCoinType coin, const std::string& string) {
 
     case TWCoinTypeGroestlcoin:
         return Bitcoin::SegwitAddress::isValid(string, HRP_GROESTLCOIN) ||
-               Groestlcoin::Address::isValid(string, {TWP2PKHPrefixGroestlcoin, TWP2SHPrefixGroestlcoin});
+               Groestlcoin::Address::isValid(string,
+                                             {TWP2PKHPrefixGroestlcoin, TWP2SHPrefixGroestlcoin});
 
     case TWCoinTypeIocoin:
         return Bitcoin::Address::isValid(string, {{TWP2PKHPrefixIocoin}, {TWP2SHPrefixIocoin}});
@@ -130,7 +135,8 @@ bool TW::validateAddress(TWCoinType coin, const std::string& string) {
         return Ripple::Address::isValid(string);
 
     case TWCoinTypeSteem:
-        return Bravo::Address::isValid(string, { TW::Steem::MainnetPrefix, TW::Steem::TestnetPrefix });
+        return Bravo::Address::isValid(string,
+                                       {TW::Steem::MainnetPrefix, TW::Steem::TestnetPrefix});
 
     case TWCoinTypeStellar:
     case TWCoinTypeKin:
@@ -147,7 +153,9 @@ bool TW::validateAddress(TWCoinType coin, const std::string& string) {
 
     case TWCoinTypeZelcash:
     case TWCoinTypeZcash:
-        return Zcash::TAddress::isValid(string, {{Zcash::TAddress::staticPrefix, TWP2PKHPrefixZcashT}, {Zcash::TAddress::staticPrefix, TWP2SHPrefixZcashT}});
+        return Zcash::TAddress::isValid(string,
+                                        {{Zcash::TAddress::staticPrefix, TWP2PKHPrefixZcashT},
+                                         {Zcash::TAddress::staticPrefix, TWP2SHPrefixZcashT}});
 
     case TWCoinTypeZilliqa:
         return Zilliqa::isValidAddress(string);
@@ -180,13 +188,16 @@ bool TW::validateAddress(TWCoinType coin, const std::string& string) {
     }
 }
 
-std::string TW::deriveAddress(TWCoinType coin, const PrivateKey& privateKey) {
+std::string TW::deriveAddress(TWCoinType coin, const PrivateKey &privateKey) {
     auto keyType = TW::publicKeyType(coin);
     return TW::deriveAddress(coin, privateKey.getPublicKey(keyType));
 }
 
-std::string TW::deriveAddress(TWCoinType coin, const PublicKey& publicKey) {
+std::string TW::deriveAddress(TWCoinType coin, const PublicKey &publicKey) {
     switch (coin) {
+    case TWCoinTypeAeternity:
+        return Aeternity::Address(publicKey).string();
+
     case TWCoinTypeBinance:
         return Cosmos::Address(HRP_BINANCE, publicKey).string();
 

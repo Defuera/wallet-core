@@ -644,7 +644,7 @@
         "derivationPath": "m/44'/0'/0'/0",
         "curve": "ed25519",
         "publicKeyType": "ed25519",
-        "transactionPath": "/transaction/",
-        "explorer": "https://www.aeknow.org/"
+        "transactionPath": "/block/transaction/",
+        "explorer": "https://www.aeknow.org"
     }
 ]
