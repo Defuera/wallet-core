@@ -634,5 +634,17 @@
         "xpub": "xpub",
         "xprv": "xprv",
         "explorer": "https://explorer.monetaryunit.org/tx/"
+    },
+    {
+        "id": "aeternity",
+        "name": "Aeternity",
+        "symbol": "AE",
+        "decimals": 18,
+        "blockchain": "Aeternity",
+        "derivationPath": "m/44'/0'/0'/0",
+        "curve": "ed25519",
+        "publicKeyType": "ed25519",
+        "transactionPath": "/transaction/",
+        "explorer": "https://www.aeknow.org/"
     }
 ]
