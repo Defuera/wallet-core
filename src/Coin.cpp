@@ -6,8 +6,8 @@
 
 #include "Coin.h"
 
-#include "ARK/Address.h"
 #include "Aeternity/Address.h"
+#include "ARK/Address.h"
 #include "Aion/Address.h"
 #include "Bitcoin/Address.h"
 #include "Bitcoin/CashAddress.h"
@@ -182,7 +182,7 @@ bool TW::validateAddress(TWCoinType coin, const std::string &string) {
 
     case TWCoinTypeARK:
         return ARK::Address::isValid(string);
-                    
+
     case TWCoinTypeMonetaryUnit:
         return Bitcoin::Address::isValid(string, {{TWP2PKHPrefixMonetaryUnit}, {TWP2SHPrefixMonetaryUnit}});
     }
@@ -195,9 +195,6 @@ std::string TW::deriveAddress(TWCoinType coin, const PrivateKey &privateKey) {
 
 std::string TW::deriveAddress(TWCoinType coin, const PublicKey &publicKey) {
     switch (coin) {
-    case TWCoinTypeAeternity:
-        return Aeternity::Address(publicKey).string();
-
     case TWCoinTypeBinance:
         return Cosmos::Address(HRP_BINANCE, publicKey).string();
 
@@ -314,9 +311,12 @@ std::string TW::deriveAddress(TWCoinType coin, const PublicKey &publicKey) {
 
     case TWCoinTypeARK:
         return ARK::Address(publicKey).string();
-        
+
     case TWCoinTypeMonetaryUnit:
         return Bitcoin::Address(publicKey, TWP2PKHPrefixMonetaryUnit).string();
+
+    case TWCoinTypeAeternity:
+        return Aeternity::Address(publicKey).string();
     }
 }
 
