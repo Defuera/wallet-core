@@ -86,8 +86,7 @@ bool TW::validateAddress(TWCoinType coin, const std::string &string) {
 
     case TWCoinTypeGroestlcoin:
         return Bitcoin::SegwitAddress::isValid(string, HRP_GROESTLCOIN) ||
-               Groestlcoin::Address::isValid(string,
-                                             {TWP2PKHPrefixGroestlcoin, TWP2SHPrefixGroestlcoin});
+               Groestlcoin::Address::isValid(string, {TWP2PKHPrefixGroestlcoin, TWP2SHPrefixGroestlcoin});
 
     case TWCoinTypeIocoin:
         return Bitcoin::Address::isValid(string, {{TWP2PKHPrefixIocoin}, {TWP2SHPrefixIocoin}});
@@ -135,8 +134,7 @@ bool TW::validateAddress(TWCoinType coin, const std::string &string) {
         return Ripple::Address::isValid(string);
 
     case TWCoinTypeSteem:
-        return Bravo::Address::isValid(string,
-                                       {TW::Steem::MainnetPrefix, TW::Steem::TestnetPrefix});
+        return Bravo::Address::isValid(string, { TW::Steem::MainnetPrefix, TW::Steem::TestnetPrefix });
 
     case TWCoinTypeStellar:
     case TWCoinTypeKin:
@@ -153,9 +151,7 @@ bool TW::validateAddress(TWCoinType coin, const std::string &string) {
 
     case TWCoinTypeZelcash:
     case TWCoinTypeZcash:
-        return Zcash::TAddress::isValid(string,
-                                        {{Zcash::TAddress::staticPrefix, TWP2PKHPrefixZcashT},
-                                         {Zcash::TAddress::staticPrefix, TWP2SHPrefixZcashT}});
+        return Zcash::TAddress::isValid(string, {{Zcash::TAddress::staticPrefix, TWP2PKHPrefixZcashT}, {Zcash::TAddress::staticPrefix, TWP2SHPrefixZcashT}});
 
     case TWCoinTypeZilliqa:
         return Zilliqa::isValidAddress(string);
@@ -188,12 +184,12 @@ bool TW::validateAddress(TWCoinType coin, const std::string &string) {
     }
 }
 
-std::string TW::deriveAddress(TWCoinType coin, const PrivateKey &privateKey) {
+std::string TW::deriveAddress(TWCoinType coin, const PrivateKey& privateKey) {
     auto keyType = TW::publicKeyType(coin);
     return TW::deriveAddress(coin, privateKey.getPublicKey(keyType));
 }
 
-std::string TW::deriveAddress(TWCoinType coin, const PublicKey &publicKey) {
+std::string TW::deriveAddress(TWCoinType coin, const PublicKey& publicKey) {
     switch (coin) {
     case TWCoinTypeBinance:
         return Cosmos::Address(HRP_BINANCE, publicKey).string();
