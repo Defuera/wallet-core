@@ -242,7 +242,7 @@ TEST(Coin, validateAddressLitecoin) {
 TEST(Coin, validateAddressCosmos) {
     EXPECT_TRUE(validateAddress(TWCoinTypeCosmos, "cosmos1hkfq3zahaqkkzx5mjnamwjsfpq2jk7z0emlrvp"));
     EXPECT_FALSE(validateAddress(TWCoinTypeCosmos, "xosmos1hkfq3zahaqkkzx5mjnamwjsfpq2jk7z0emlrvp"));
-    EXPECT_EQ(TW::deriveAddress(TWCoinTypeAeternity, privateKey), "ak_11111111111111111111111111111111273Yts");
+    EXPECT_EQ(TW::deriveAddress(TWCoinTypeAeternity, privateKey), "ak_2p5878zbFhxnrm7meL7TmqwtvBaqcBddyp5eGzZbovZ5FeVfcw");
 }
 
 } // namespace TW

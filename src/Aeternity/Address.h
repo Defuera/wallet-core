@@ -26,6 +26,10 @@ class Address {
     std::string string() const;
 
   private:
+    // Class constants
+    static const size_t size = 32;
+    Data bytes;
+
     static bool checkType(const std::string& type);
     static bool checkPayload(const std::string& payload);
 };

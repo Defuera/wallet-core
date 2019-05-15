@@ -6,6 +6,7 @@
 
 #include "Address.h"
 #include <Base58.h>
+#include <Coin.h>
 #include <HexCoding.h>
 
 using namespace TW::Aeternity;
@@ -22,30 +23,28 @@ bool TW::Aeternity::Address::isValid(const std::string &string) {
     }
 }
 
-/// Initializes an address from a string representation.
-TW::Aeternity::Address::Address(const std::string &string) {
-    //    // 1 base58
-    //    auto encoded = Base58::bitcoin.encodeCheck(string);
-    //
-    //    // 2 concatenate with prefix
-    //    auto address = prefix + encoded;
-}
-
 /// Initializes an address from a public key.
 TW::Aeternity::Address::Address(const PublicKey &publicKey) {
     if (publicKey.type != TWPublicKeyTypeED25519) {
         throw std::invalid_argument("Invalid public key type");
     }
+
+    bytes = publicKey.bytes;
+}
+
+/// Initializes an address from a string representation.
+TW::Aeternity::Address::Address(const std::string &string) {
+//todo
 }
 
 /// Returns a string representation of the Bravo address.
 std::string Address::string() const {
-    return ""; // prefix + Base58::bitcoin.encodeCheck("");
+    return prefix + Base58::bitcoin.encodeCheck(bytes);
 }
 bool Address::checkType(const std::string &type) {
     return type == prefix;
 }
 bool Address::checkPayload(const std::string &payload) {
     unsigned long base58 = Base58::bitcoin.decodeCheck(payload).size();
-    return base58 == 32;
+    return base58 == size;
 }
