@@ -17,8 +17,8 @@ bool TW::Aeternity::Address::isValid(const std::string &string) {
     if (string.empty()) {
         return false;
     } else {
-        auto type = string.substr(0, prefix.size());
-        auto payload = string.substr(prefix.size(), string.size() - 1);
+        auto type = string.substr(0, addressPrefix.size());
+        auto payload = string.substr(addressPrefix.size(), string.size() - 1);
         return checkType(type) && checkPayload(payload);
     }
 }
@@ -39,10 +39,10 @@ TW::Aeternity::Address::Address(const std::string &string) {
 
 /// Returns a string representation of the Bravo address.
 std::string Address::string() const {
-    return prefix + Base58::bitcoin.encodeCheck(bytes);
+    return addressPrefix + Base58::bitcoin.encodeCheck(bytes);
 }
 bool Address::checkType(const std::string &type) {
-    return type == prefix;
+    return type == addressPrefix;
 }
 bool Address::checkPayload(const std::string &payload) {
     unsigned long base58 = Base58::bitcoin.decodeCheck(payload).size();

@@ -9,7 +9,7 @@
 
 namespace TW::Aeternity {
 
-static const std::string prefix = "ak_";
+static const std::string addressPrefix = "ak_";
 
 class Address {
   public:
