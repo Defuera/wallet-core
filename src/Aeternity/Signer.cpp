@@ -13,12 +13,10 @@
 using namespace TW;
 using namespace Aeternity;
 
-// SignEncodeTx
+/// SignEncodeTx
 std::string Aeternity::Signer::sign(const TW::PrivateKey &privateKey, Transaction &transaction) {
-    std::string txPrefix = "tx_";
     auto encodedTx = transaction.encode();
-    auto trimPrefix = encodedTx.substr(txPrefix.size(), encodedTx.size() - 1);
-    auto txRaw = TW::Base64::decode(trimPrefix); // parse_hex(trimPrefix);
+    auto txRaw = parseRawTransaction(encodedTx);
 
     /// append networkId and txRaw
     auto data = Data();
@@ -28,11 +26,12 @@ std::string Aeternity::Signer::sign(const TW::PrivateKey &privateKey, Transactio
 
     /// sign
     /// ed25519.Sign(account.SigningKey, data)
-        auto sigRaw = privateKey.sign(data, TWCurveED25519); //todo is different, then go sdk -/
+    auto sigRaw = privateKey.sign(data, TWCurveED25519); // todo is different, then go sdk -/
+    auto isValid = privateKey.getPublicKey(TWPublicKeyTypeED25519).verify(sigRaw, data); //todo should it be true?
 
     /// encode the message using rlp
-    auto objectTagSignedTransaction = 11;
-    auto rlpMessageVersion = 1; // todo same as Tx
+    uint8_t objectTagSignedTransaction = 11;
+    uint8_t rlpMessageVersion = 1; // todo same as in Transaction
 
     auto rlpTxRaw = Data();
     append(rlpTxRaw, Ethereum::RLP::encode(objectTagSignedTransaction));
@@ -66,4 +65,16 @@ std::string TW::Aeternity::Signer::encode(const std::string prefix,
     append(data, arrayOfByte);
 
     return prefix + TW::Base64::encode(data);
+}
+
+Data TW::Aeternity::Signer::parseRawTransaction(std::string transaction) {
+    std::string txPrefix = "tx_"; // todo get from Tx class
+
+    auto trimPrefix = transaction.substr(txPrefix.size(), transaction.size() - 1);
+    auto txRaw = TW::Base64::decode(trimPrefix);
+    /// trimChecksum
+    auto start = txRaw.begin();
+    auto end = txRaw.begin() + 97;
+    Data newVec(start, end); // todo this hardcoded 4 should be matched with encode tx hardcoded 4.
+    return newVec;
 }

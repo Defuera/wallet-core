@@ -13,7 +13,6 @@
 
 using namespace TW;
 using namespace TW::Aeternity;
-//auto address = Aeternity::Address("0x4646464646464646464646464646464646464646464646464646464646464646");
 
 TEST(AeternitySigner, Sign) {
     std::string sender_id = "ak_2a1j2Mk9YSmC1gioUq4PWRm3bsv887MbuRVwyv4KaUGoR1eiKi";
@@ -25,10 +24,10 @@ TEST(AeternitySigner, Sign) {
     uint64_t nonce = 49;
 
     auto transaction = Transaction(sender_id, recipient_id, amount, fee, payload, ttl, nonce);
-    auto privateKey = PrivateKey(parse_hex("46464646464646464646464646464646464646464646464646464646464646464646464646464646464646464646464646464646464646464646464646464646"));
+    auto privateKey = PrivateKey(parse_hex("4646464646464646464646464646464646464646464646464646464646464646"));
 
     auto signature = Signer::sign(privateKey, transaction);
 
-    EXPECT_EQ(signature, "sg_DjHWizZn8aA5Mnu5A9y7WvK1xYyZQeNmoZSVy11faj9uTN1dJvjTXoYrFqZVdz6YJGHnvEyYoyaUhWPX2RGRVZLG7DnEf");
+    EXPECT_EQ(signature, "sg_CwTqP+LAnMNKoxDkq4FuOQ8LVte4EjYuOrCnbWtCREUw+WMqapVGiL9V6CO9F93gcIt9YNehmYdmcB3XJ9pSAYnrNz4=");
 }
 
