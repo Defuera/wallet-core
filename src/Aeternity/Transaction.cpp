@@ -52,6 +52,7 @@ std::vector<unsigned char> TW::Aeternity::Transaction::intToBytes(int paramInt) 
     return arrayOfByte;
 }
 
+// Encode a byte array into base58 with chacksum and a prefix
 std::string TW::Aeternity::Transaction::finalize(const std::string prefix, const TW::Data &rawTx) {
     std::vector<unsigned char> arrayOfByte(4);
     auto checksum = Hash::sha256(Hash::sha256(rawTx));

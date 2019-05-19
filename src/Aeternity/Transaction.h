@@ -19,7 +19,7 @@ class Transaction {
     ///recepient address
     std::string &recipient_id;
 
-    uint64_t amount; // todo uint 128?
+    uint64_t amount;
 
     uint64_t fee;
 
@@ -32,15 +32,15 @@ class Transaction {
 
     Transaction(
             std::string &sender_id,
-            std::string &recepientId,
-            uint64_t amount, // todo uint 128?
+            std::string &recipientId,
+            uint64_t amount,
             uint64_t fee,
             std::string &payload,
             uint64_t ttl,
             uint64_t nonce
     )
         : sender_id(sender_id)
-        , recipient_id(recepientId)
+        , recipient_id(recipientId)
         , amount(amount)
         , fee(fee)
         , payload(payload)
@@ -56,7 +56,7 @@ class Transaction {
   private:
     std::vector<unsigned char> intToBytes(int paramInt);
 
-    std::string finalize(const std::string basicString, const Data& vector);
+    std::string finalize(std::string basicString, const Data& vector);
 };
 
 } // namespace TW::Aeternity
