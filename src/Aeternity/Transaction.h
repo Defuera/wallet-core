@@ -13,31 +13,32 @@
 namespace TW::Aeternity {
 
 class Transaction {
+
   public:
-    ///sender address
+    /// sender address
     std::string &sender_id;
-    ///recepient address
+    /// recepient address
     std::string &recipient_id;
 
     uint64_t amount;
 
     uint64_t fee;
 
-    //message
+    /// message
     std::string &payload;
 
-    //the block time that tx live on the mempool, you can use 0 by default, or >latest block
+    /// the block time that tx live on the mempool, you can use 0 by default, or >latest block
     uint64_t ttl;
     uint64_t nonce;
 
     Transaction(
-            std::string &sender_id,
-            std::string &recipientId,
-            uint64_t amount,
-            uint64_t fee,
-            std::string &payload,
-            uint64_t ttl,
-            uint64_t nonce
+        std::string &sender_id,
+        std::string &recipientId,
+        uint64_t amount,
+        uint64_t fee,
+        std::string &payload,
+        uint64_t ttl,
+        uint64_t nonce
     )
         : sender_id(sender_id)
         , recipient_id(recipientId)
@@ -49,14 +50,7 @@ class Transaction {
 
     std::string encode();
 
-    const std::string txPrefix = "tx_";
-    const uint8_t tag = 1;
-    Data buildTag(std::string & address);
-
-  private:
-    std::vector<unsigned char> intToBytes(int paramInt);
-
-    std::string finalize(std::string basicString, const Data& vector);
+    static Data buildTag(std::string &address);
 };
 
 } // namespace TW::Aeternity

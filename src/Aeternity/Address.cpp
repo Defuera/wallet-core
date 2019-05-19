@@ -5,6 +5,7 @@
 // file LICENSE at the root of the source code distribution tree.
 
 #include "Address.h"
+#include "Identifiers.h"
 #include <Base58.h>
 #include <Coin.h>
 #include <HexCoding.h>
@@ -17,8 +18,9 @@ bool TW::Aeternity::Address::isValid(const std::string &string) {
     if (string.empty()) {
         return false;
     } else {
-        auto type = string.substr(0, addressPrefix.size());
-        auto payload = string.substr(addressPrefix.size(), string.size() - 1);
+        uint8_t prefixSize = Identifiers::prefixAccountPubkey.size();
+        auto type = string.substr(0, prefixSize);
+        auto payload = string.substr(prefixSize, string.size() - 1);
         return checkType(type) && checkPayload(payload);
     }
 }
@@ -34,15 +36,15 @@ TW::Aeternity::Address::Address(const PublicKey &publicKey) {
 
 /// Initializes an address from a string representation.
 TW::Aeternity::Address::Address(const std::string &string) {
-//todo
+    // todo
 }
 
 /// Returns a string representation of the Bravo address.
 std::string Address::string() const {
-    return addressPrefix + Base58::bitcoin.encodeCheck(bytes);
+    return Identifiers::prefixAccountPubkey + Base58::bitcoin.encodeCheck(bytes);
 }
 bool Address::checkType(const std::string &type) {
-    return type == addressPrefix;
+    return type == Identifiers::prefixAccountPubkey;
 }
 bool Address::checkPayload(const std::string &payload) {
     unsigned long base58 = Base58::bitcoin.decodeCheck(payload).size();

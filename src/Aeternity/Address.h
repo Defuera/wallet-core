@@ -9,8 +9,6 @@
 
 namespace TW::Aeternity {
 
-static const std::string addressPrefix = "ak_";
-
 class Address {
   public:
     /// Determines whether a string makes a valid address.
@@ -26,7 +24,6 @@ class Address {
     std::string string() const;
 
   private:
-    // Class constants
     static const size_t size = 32;
     Data bytes;
 
