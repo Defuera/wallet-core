@@ -29,25 +29,6 @@ std::string Aeternity::Signer::sign(const TW::PrivateKey &privateKey, Transactio
     /// sign
     /// ed25519.Sign(account.SigningKey, data)
         auto sigRaw = privateKey.sign(data, TWCurveED25519); //todo is different, then go sdk -/
-    Data sigRawArray[64] = {
-        Data(11),  Data(4),   Data(234), Data(63),  Data(226), Data(192), Data(156), Data(195),
-        Data(74),  Data(163), Data(16),  Data(228), Data(171), Data(129), Data(110), Data(57),
-        Data(15),  Data(11),  Data(86),  Data(215), Data(184), Data(18),  Data(54),  Data(46),
-        Data(58),  Data(176), Data(167), Data(109), Data(107), Data(66),  Data(68),  Data(69),
-        Data(70),  Data(254), Data(251), Data(189), Data(16),  Data(39),  Data(189), Data(233),
-        Data(111), Data(159), Data(1),   Data(103), Data(1),   Data(227), Data(62),  Data(141),
-        Data(103), Data(0),   Data(239), Data(105), Data(141), Data(131), Data(62),  Data(187),
-        Data(112), Data(224), Data(81),  Data(241), Data(71),  Data(37),  Data(135), Data(2)};
-
-
-    std::vector<uint8_t> myVector;
-    append(myVector, )
-    myVector.insert(0, 11);
-
-    auto sigRaw = Data();
-    for (int i = 0; i < 64; i++) {
-        append(sigRaw, sigRawArray[i]);
-    }
 
     /// encode the message using rlp
     auto objectTagSignedTransaction = 11;
