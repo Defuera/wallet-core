@@ -28,7 +28,11 @@ std::string Aeternity::Signer::sign(const TW::PrivateKey &privateKey, Transactio
     append(data, txRaw);
 
     /// sign ed25519
-    auto sigRaw = privateKey.sign(data, TWCurveED25519); // todo is different, then go sdk -/
+    auto sigRaw = privateKey.sign(data, TWCurveED25519);
+
+    const PublicKey &publicKey = privateKey.getPublicKey(TWPublicKeyTypeED25519);
+    auto isValid = publicKey.verify(sigRaw, data); //todo only for testing
+
     auto signature = ChecksumEncoder::encode(Identifiers::prefixSignature, sigRaw);
 
     return signature;
