@@ -29,22 +29,6 @@ std::string Aeternity::Signer::sign(const TW::PrivateKey &privateKey, Transactio
 
     /// sign ed25519
     auto sigRaw = privateKey.sign(data, TWCurveED25519); // todo is different, then go sdk -/
-
-    /// encode the message using rlp
-    auto rlpTxRaw = Data();
-    append(rlpTxRaw, Ethereum::RLP::encode(Identifiers::objectTagSignedTransaction));
-    append(rlpTxRaw, Ethereum::RLP::encode(Identifiers::rlpMessageVersion));
-    append(rlpTxRaw, Ethereum::RLP::encode(sigRaw));
-    append(rlpTxRaw, Ethereum::RLP::encode(txRaw));
-
-    /// encode the rlp message with the prefix
-    auto signedEncodedTx = ChecksumEncoder::encode(Identifiers::prefixTransaction, rlpTxRaw);
-
-    /// compute the hash, calculate the blacke2b 32bit hash of the input byte array
-    auto rlpTxHashRaw = Hash::blake2b(rlpTxRaw, 32);
-
-    auto signedEncodedTxHash =
-        ChecksumEncoder::encode(Identifiers::prefixTransactionHash, rlpTxHashRaw);
     auto signature = ChecksumEncoder::encode(Identifiers::prefixSignature, sigRaw);
 
     return signature;
