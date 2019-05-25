@@ -6,6 +6,7 @@
 
 #include <string>
 #include <Hash.h>
+#include <Base58.h>
 
 namespace TW::Aeternity {
 
@@ -14,7 +15,7 @@ class ChecksumEncoder {
   public:
     static const uint8_t checkSumSize = 4;
 
-    /// Encode a byte array into base58 with checksum and a prefix
+    /// Encode a byte array into base64 with checksum and a prefix
     static std::string encode(const std::string &prefix, const TW::Data &rawTx) {
         std::vector<unsigned char> arrayOfByte(checkSumSize);
         auto checksum = Hash::sha256(Hash::sha256(rawTx));
@@ -25,6 +26,19 @@ class ChecksumEncoder {
         append(data, arrayOfByte);
 
         return prefix + TW::Base64::encode(data);
+    }
+
+    /// Encode a byte array into base58c with checksum and a prefix
+    static std::string encodeBase58c(const std::string &prefix, const TW::Data &rawTx) {
+        std::vector<unsigned char> arrayOfByte(checkSumSize);
+        auto checksum = Hash::sha256(Hash::sha256(rawTx));
+        std::copy(std::begin(checksum), std::end(checksum), std::begin(arrayOfByte));
+
+        auto data = Data();
+        append(data, rawTx);
+        append(data, arrayOfByte);
+
+        return prefix + Base58::bitcoin.encodeCheck(data);
     }
 
 }; // namespace ChecksumEncoder

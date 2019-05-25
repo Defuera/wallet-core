@@ -27,8 +27,8 @@ static const uint8_t rlpMessageVersion = 1;
 
 /// Object tags
 /// \see https://github.com/aeternity/protocol/blob/master/serializations.md#binary-serialization
-static const uint8_t objectTagSignedTransaction = 11;
-static const uint8_t objectTagSpendTransaction = 12;
+static const uint64_t objectTagSignedTransaction = 11;
+static const uint64_t objectTagSpendTransaction = 12;
 
 /// Tag constant for ids
 /// \see https://github.com/aeternity/protocol/blob/master/serializations.md#the-id-type
