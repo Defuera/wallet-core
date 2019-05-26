@@ -40,7 +40,7 @@ std::string Aeternity::Signer::sign(const TW::PrivateKey &privateKey, Transactio
     auto rlpTxHashRaw = Hash::blake2b(rlpTxRaw, 32);
     auto signedEncodedTxHash = ChecksumEncoder::encodeBase58c(Identifiers::prefixTransactionHash, rlpTxHashRaw);
 
-    //todo Signer should produce Transaction object, not return signature
+    // todo Signer should produce Transaction object, not return signature
     return signature;
 }
 
@@ -57,21 +57,20 @@ Data TW::Aeternity::Signer::parseRawTransaction(const std::string &transaction) 
 
 Data Signer::buildRlpTxRaw(Data &txRaw, Data &sigRaw) {
     auto rlpTxRaw = Data();
-    auto listOfBody = Data();
-
-    append(listOfBody, Ethereum::RLP::encode(sigRaw));
-    append(listOfBody, Ethereum::RLP::encode(txRaw));
+    auto signaturesList = Data();
+    append(signaturesList, Ethereum::RLP::encode(sigRaw));
 
     append(rlpTxRaw, Ethereum::RLP::encode(Identifiers::objectTagSignedTransaction));
     append(rlpTxRaw, Ethereum::RLP::encode(Identifiers::rlpMessageVersion));
-    append(rlpTxRaw, Ethereum::RLP::encodeList(listOfBody));
+    append(rlpTxRaw, Ethereum::RLP::encodeList(signaturesList));
+    append(rlpTxRaw, Ethereum::RLP::encode(txRaw));
 
     return Ethereum::RLP::encodeList(rlpTxRaw);
 }
 
 Data Signer::buildMessageToSign(Data &txRaw) {
     auto data = Data();
-    std::vector<byte> bytes(Identifiers::networkId.begin(), Identifiers::networkId.end());
+    Data bytes(Identifiers::networkId.begin(), Identifiers::networkId.end());
     append(data, bytes);
     append(data, txRaw);
     return data;

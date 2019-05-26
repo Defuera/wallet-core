@@ -15,7 +15,7 @@ using namespace TW;
 using namespace TW::Aeternity;
 
 TEST(AeternitySigner, Sign) {
-    std::string sender_id = "ak_2a1j2Mk9YSmC1gioUq4PWRm3bsv887MbuRVwyv4KaUGoR1eiKi";
+    std::string sender_id = "ak_2p5878zbFhxnrm7meL7TmqwtvBaqcBddyp5eGzZbovZ5FeVfcw";
     std::string recipient_id = "ak_Egp9yVdpxmvAfQ7vsXGvpnyfNq71msbdUpkMNYGTeTe8kPL3v";
     uint64_t amount = 10;
     double fee = 2e13;
