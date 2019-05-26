@@ -26,12 +26,11 @@ std::string Aeternity::Signer::sign(const TW::PrivateKey &privateKey, Transactio
     auto msg = buildMessageToSign(txRaw);
 
     /// sign ed25519
-    auto sigRaw = privateKey.sign(msg, TWCurveED25519); // todo result is different, then aeternity sdk
+    auto sigRaw = privateKey.sign(msg, TWCurveED25519);
     auto signature = ChecksumEncoder::encode(Identifiers::prefixSignature, sigRaw);
 
     /// encode the message using rlp
     auto rlpTxRaw = buildRlpTxRaw(txRaw, sigRaw);
-    auto rlpTxRawHex = hex(rlpTxRaw); //todo only for debugging
 
     /// encode the rlp message with the prefix
     auto signedEncodedTx = ChecksumEncoder::encode(Identifiers::prefixTransaction, rlpTxRaw);
@@ -52,6 +51,7 @@ Data TW::Aeternity::Signer::parseRawTransaction(const std::string &transaction) 
     auto start = txWithChecksum.begin();
     auto end = txWithChecksum.end() - ChecksumEncoder::checkSumSize;
     Data txRaw(start, end);
+
     return txRaw;
 }
 

@@ -178,6 +178,7 @@ TEST(Coin, ValidateAddressARK){
 
 TEST(Coin, ValidateAddressAeternity) {
     EXPECT_TRUE(validateAddress(TWCoinTypeAeternity, "ak_11111111111111111111111111111111273Yts"));
+    EXPECT_FALSE(validateAddress(TWCoinTypeAeternity, "ak_11111111111111111111111111111111273Ytt"));// wrong checksum
     EXPECT_FALSE(validateAddress(TWCoinTypeAeternity,"ka_11111111111111111111111111111111273Yts")); // wrong prefix
     EXPECT_FALSE(validateAddress(TWCoinTypeAeternity,"ak_111111111111111111111111111111111173Yts")); // wrong size
     EXPECT_FALSE(validateAddress(TWCoinTypeAeternity, "")); // empty address

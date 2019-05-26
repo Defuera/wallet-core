@@ -36,7 +36,12 @@ TW::Aeternity::Address::Address(const PublicKey &publicKey) {
 
 /// Initializes an address from a string representation.
 TW::Aeternity::Address::Address(const std::string &string) {
-    // todo
+    if (!isValid(string)) {
+        throw std::invalid_argument("Invalid address");
+    }
+
+    auto payload = string.substr(Identifiers::prefixTransaction.size(), string.size());
+    bytes = Base58::bitcoin.decodeCheck(payload);
 }
 
 /// Returns a string representation of the Bravo address.

@@ -28,6 +28,6 @@ TEST(AeternitySigner, Sign) {
 
     auto signature = Signer::sign(privateKey, transaction);
 
-    EXPECT_EQ(signature, "sg_CwTqP+LAnMNKoxDkq4FuOQ8LVte4EjYuOrCnbWtCREUw+WMqapVGiL9V6CO9F93gcIt9YNehmYdmcB3XJ9pSAYnrNz4=");
+    EXPECT_EQ(signature, "sg_2dlw1eTrh79Yri5+urBSwVMJ86dSvCVtWc/nxIJrhIehxLzbtEdddjNyGJFc700p09KSd01oVTrpoCfiFsFvB3kDla0=");
 }
 

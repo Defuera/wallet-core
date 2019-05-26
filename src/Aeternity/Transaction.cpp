@@ -26,10 +26,8 @@ std::string TW::Aeternity::Transaction::encode() {
     append(encoded, Ethereum::RLP::encode(payload));
 
     const Data &raw = Ethereum::RLP::encodeList(encoded);
-    auto tx = TW::Base64::encode(raw);
-    auto result = ChecksumEncoder::encode(Identifiers::prefixTransaction, raw);
 
-    return result;
+    return ChecksumEncoder::encode(Identifiers::prefixTransaction, raw);
 }
 
 //// buildIDTag assemble an id() object
