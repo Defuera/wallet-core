@@ -18,7 +18,7 @@ using namespace Aeternity;
 
 /// implementation copied from
 /// https://github.com/aeternity/aepp-sdk-go/blob/07aa8a77e5/aeternity/helpers.go#L367
-std::string Aeternity::Signer::sign(const TW::PrivateKey &privateKey, Transaction &transaction) {
+Proto::SigningOutput Aeternity::Signer::sign(const TW::PrivateKey &privateKey, Transaction &transaction) {
     const std::string &txString = transaction.encode();
     auto txRaw = parseRawTransaction(txString);
 
@@ -35,12 +35,7 @@ std::string Aeternity::Signer::sign(const TW::PrivateKey &privateKey, Transactio
     /// encode the rlp message with the prefix
     auto signedEncodedTx = ChecksumEncoder::encode(Identifiers::prefixTransaction, rlpTxRaw);
 
-    /// compute the hash, calculate the blake2b 32bit hash of the input byte array
-    auto rlpTxHashRaw = Hash::blake2b(rlpTxRaw, 32);
-    auto signedEncodedTxHash = ChecksumEncoder::encodeBase58c(Identifiers::prefixTransactionHash, rlpTxHashRaw);
-
-    // todo Signer should produce Transaction object, not return signature
-    return signature;
+    return createProtoOutput(signature, signedEncodedTx);
 }
 
 Data TW::Aeternity::Signer::parseRawTransaction(const std::string &transaction) {
@@ -74,4 +69,16 @@ Data Signer::buildMessageToSign(Data &txRaw) {
     append(data, bytes);
     append(data, txRaw);
     return data;
+}
+
+Proto::SigningOutput Signer::createProtoOutput(std::string signature, const std::string& signedTx) {
+    auto output = Proto::SigningOutput();
+
+    Data sigData(signature.begin(), signature.end());
+    output.set_signature(sigData.data(), sigData.size());
+
+    const Data txData(signedTx.begin(), signedTx.end());
+    output.set_encoded(txData.data(), txData.size());
+
+    return output;
 }

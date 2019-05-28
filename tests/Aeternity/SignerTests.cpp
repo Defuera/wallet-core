@@ -26,8 +26,8 @@ TEST(AeternitySigner, Sign) {
     auto transaction = Transaction(sender_id, recipient_id, amount, fee, payload, ttl, nonce);
     auto privateKey = PrivateKey(parse_hex("4646464646464646464646464646464646464646464646464646464646464646"));
 
-    auto signature = Signer::sign(privateKey, transaction);
-
-    EXPECT_EQ(signature, "sg_2dlw1eTrh79Yri5+urBSwVMJ86dSvCVtWc/nxIJrhIehxLzbtEdddjNyGJFc700p09KSd01oVTrpoCfiFsFvB3kDla0=");
+    auto result = Signer::sign(privateKey, transaction);
+    EXPECT_EQ(result.signature(), "sg_2dlw1eTrh79Yri5+urBSwVMJ86dSvCVtWc/nxIJrhIehxLzbtEdddjNyGJFc700p09KSd01oVTrpoCfiFsFvB3kDla0=");
+    EXPECT_EQ(result.encoded(), "tx_+KkLAfhCuEDZ2XDV5OuHv1iuLn66sFLBUwnzp1K8JW1Zz+fEgmuEh6HEvNu0R112M3IYkVzvTSnT0pJ3TWhVOumgJ+IWwW8HuGH4XwwBoQHuk6T2b40WuBm7m+uf/M383BQS6H/uajJMKpmh4OZxSKEBHxOjsIvwAUAGYqaLadh194A87EwIZH9u1dhMeJe9UKMKhhIwnOVAAIMBQ0Uxi0hlbGxvIFdvcmxkDZqNSg==");
 }
 

@@ -78,5 +78,6 @@ class CoinAddressDerivationTests {
         ZELCASH -> assertEquals("t1UKbRPzL4WN8Rs8aZ8RNiWoD2ftCMHKGUf", address)
         ARK -> assertEquals("Ac49m5pu5YpMMNgEbSYeZUEpRMHcSK3DfV", address)
         MONETARYUNIT -> assertEquals("7W3QRu8FttKzmYtRbXNKopeHweAKWuun2q", address)
+        AETERNITY -> assertEquals("ak_2ma7fvMp52vKrw8TzNhPFeCyvPNZLELQPnsin4x4qmEK4FCJHR", address)
     }
 }

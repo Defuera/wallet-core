@@ -11,6 +11,9 @@ namespace TW::Aeternity {
 
 class Address {
   public:
+    static const size_t size = 32;
+    Data bytes;
+
     /// Determines whether a string makes a valid address.
     static bool isValid(const std::string &string);
 
@@ -24,10 +27,19 @@ class Address {
     std::string string() const;
 
   private:
-    static const size_t size = 32;
-    Data bytes;
 
     static bool checkType(const std::string& type);
     static bool checkPayload(const std::string& payload);
 };
+
+inline bool operator==(const Address& lhs, const Address& rhs) {
+    return lhs.bytes == rhs.bytes;
+}
+
 } // namespace TW::Aeternity
+
+
+/// Wrapper for C interface.
+struct TWAeternityAddress {
+    TW::Aeternity::Address impl;
+};
