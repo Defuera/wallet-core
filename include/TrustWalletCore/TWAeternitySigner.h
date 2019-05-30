@@ -5,8 +5,6 @@
 // file LICENSE at the root of the source code distribution tree.
 #pragma once
 
-#include "TWBase.h"
-#include "TWData.h"
 #include "TWAeternityProto.h"
 
 TW_EXTERN_C_BEGIN

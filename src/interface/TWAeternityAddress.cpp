@@ -42,12 +42,12 @@ struct TWAeternityAddress *_Nonnull TWAeternityAddressCreateWithPublicKey(struct
     return new TWAeternityAddress{ Address(publicKey->impl) };
 }
 
-void TWAeternityAddressDelete(struct TWAeternityAddress *_Nonnull address) {
-    delete address;
-}
-
 /// Returns the address string representation.
 TWString *_Nonnull TWAeternityAddressDescription(struct TWAeternityAddress *_Nonnull address){
     const auto string = address->impl.string();
     return TWStringCreateWithUTF8Bytes(string.c_str());
+}
+
+void TWAeternityAddressDelete(struct TWAeternityAddress *_Nonnull address) {
+    delete address;
 }
