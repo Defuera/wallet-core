@@ -176,14 +176,6 @@ TEST(Coin, ValidateAddressARK){
     EXPECT_FALSE(validateAddress(TWCoinTypeARK, "Aqweqweqwe"));
 }
 
-TEST(Coin, ValidateAddressAeternity) {
-    EXPECT_TRUE(validateAddress(TWCoinTypeAeternity, "ak_11111111111111111111111111111111273Yts"));
-    EXPECT_FALSE(validateAddress(TWCoinTypeAeternity, "ak_11111111111111111111111111111111273Ytt"));// wrong checksum
-    EXPECT_FALSE(validateAddress(TWCoinTypeAeternity,"ka_11111111111111111111111111111111273Yts")); // wrong prefix
-    EXPECT_FALSE(validateAddress(TWCoinTypeAeternity,"ak_111111111111111111111111111111111173Yts")); // wrong size
-    EXPECT_FALSE(validateAddress(TWCoinTypeAeternity, "")); // empty address
-}
-
 TEST(Coin, ValidateAddressDGB){
     EXPECT_TRUE(validateAddress(TWCoinTypeDigiByte, "DBfCffUdSbhqKZhjuvrJ6AgvJofT4E2kp4"));
     EXPECT_TRUE(validateAddress(TWCoinTypeDigiByte, "dgb1q3p2nf26ac6qtdrv4czh5nmp2eshfj9wyn9vv3d"));
@@ -243,7 +235,14 @@ TEST(Coin, validateAddressLitecoin) {
 TEST(Coin, validateAddressCosmos) {
     EXPECT_TRUE(validateAddress(TWCoinTypeCosmos, "cosmos1hkfq3zahaqkkzx5mjnamwjsfpq2jk7z0emlrvp"));
     EXPECT_FALSE(validateAddress(TWCoinTypeCosmos, "xosmos1hkfq3zahaqkkzx5mjnamwjsfpq2jk7z0emlrvp"));
-    EXPECT_EQ(TW::deriveAddress(TWCoinTypeAeternity, privateKey), "ak_2p5878zbFhxnrm7meL7TmqwtvBaqcBddyp5eGzZbovZ5FeVfcw");
+}
+
+TEST(Coin, ValidateAddressAeternity) {
+    EXPECT_TRUE(validateAddress(TWCoinTypeAeternity, "ak_11111111111111111111111111111111273Yts"));
+    EXPECT_FALSE(validateAddress(TWCoinTypeAeternity, "ak_11111111111111111111111111111111273Ytt"));// wrong checksum
+    EXPECT_FALSE(validateAddress(TWCoinTypeAeternity,"ka_11111111111111111111111111111111273Yts")); // wrong prefix
+    EXPECT_FALSE(validateAddress(TWCoinTypeAeternity,"ak_111111111111111111111111111111111173Yts")); // wrong size
+    EXPECT_FALSE(validateAddress(TWCoinTypeAeternity, "")); // empty address
 }
 
 } // namespace TW
