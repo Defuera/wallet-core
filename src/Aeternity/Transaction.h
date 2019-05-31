@@ -42,11 +42,11 @@ class Transaction {
         uint64_t ttl,
         uint64_t nonce
     )
-        : sender_id(std::move(sender_id))
-        , recipient_id(std::move(recipientId))
+        : sender_id(sender_id)
+        , recipient_id(recipientId)
         , amount(amount)
         , fee(fee)
-        , payload(std::move(payload))
+        , payload(payload)
         , ttl(ttl)
         , nonce(nonce){};
 
