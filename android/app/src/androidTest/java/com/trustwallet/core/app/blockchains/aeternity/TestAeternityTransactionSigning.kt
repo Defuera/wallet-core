@@ -3,19 +3,17 @@ package com.trustwallet.core.app.blockchains.aeternity
 import com.trustwallet.core.app.utils.toHexBytesInByteString
 import junit.framework.Assert.assertEquals
 import org.junit.Test
-import wallet.core.jni.ARKSigner
 import wallet.core.jni.AeternitySigner
-import wallet.core.jni.proto.ARK
 import wallet.core.jni.proto.Aeternity
 
-class TestAeternitySigning {
+class TestAeternityTransactionSigning {
 
     init {
         System.loadLibrary("TrustWalletCore")
     }
 
     @Test
-    fun arkTransactionSigning(){
+    fun aeternityTransactionSigning(){
         val signingInput = Aeternity.SigningInput.newBuilder()
             .setFromAddress("ak_2p5878zbFhxnrm7meL7TmqwtvBaqcBddyp5eGzZbovZ5FeVfcw")
             .setToAddress("ak_Egp9yVdpxmvAfQ7vsXGvpnyfNq71msbdUpkMNYGTeTe8kPL3v")
