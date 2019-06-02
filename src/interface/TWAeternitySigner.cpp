@@ -17,16 +17,11 @@ TW_Aeternity_Proto_SigningOutput TWAeternitySignerSign(TW_Aeternity_Proto_Signin
     input.ParseFromArray(TWDataBytes(data), static_cast<int>(TWDataSize(data)));
 
     auto privateKey = PrivateKey(Data(input.private_key().begin(), input.private_key().end()));
+    std::string sender_id = input.from_address();
+    std::string recipient_id = input.to_address();
+    std::string payload = input.payload();
 
-    auto tx = Transaction(
-        input.from_address(),
-        input.to_address(),
-        input.amount(),
-        input.fee(),
-        input.payload(),
-        input.ttl(),
-        input.nonce()
-    );
+    auto tx = Transaction(sender_id, recipient_id, input.amount(), input.fee(), payload, input.ttl(), input.nonce());
 
     auto output = Signer::sign(privateKey, tx);
 

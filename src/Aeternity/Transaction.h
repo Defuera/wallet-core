@@ -34,11 +34,11 @@ class Transaction {
     uint64_t nonce;
 
     Transaction(
-        std::string sender_id, //todo
-        std::string recipientId,
+        std::string &sender_id,
+        std::string &recipientId,
         uint64_t amount,
         uint64_t fee,
-        std::string payload,
+        std::string &payload,
         uint64_t ttl,
         uint64_t nonce
     )
